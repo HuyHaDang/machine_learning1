@@ -29,9 +29,7 @@ X_train_raw, X_test_raw, y_train, y_test = train_test_split(
 print("Train:", X_train_raw.shape)
 print("Test:", X_test_raw.shape)
 
-# =========================
 # 2. NORMALIZE & ADD BIAS
-# =========================
 # Calculate mean and std strictly on the TRAINING set to prevent data leakage
 train_mean = X_train_raw.mean()
 train_std = X_train_raw.std()
@@ -48,7 +46,6 @@ X_test = np.c_[np.ones((X_test.shape[0], 1)), X_test]
 Y_train = y_train.values
 Y_test = y_test.values
 
-# =========================
 # 3. CORE LOGISTIC LOGIC
 def initialize(dim):
     theta = np.random.rand(dim)
@@ -137,18 +134,14 @@ print("Test Accuracy:", accuracy_score(Y_hat_test.round(), Y_test))
 
 from sklearn.linear_model import LogisticRegression
 
-# =========================
 # 8. COMPARE WITH SCIKIT-LEARN
-# =========================
 print("\n=== SCIKIT-LEARN BENCHMARK ===")
 
 sk_model = LogisticRegression(C=np.inf, fit_intercept=False, max_iter=500)
 
 sk_model.fit(X_train, Y_train)
-
 # Predict on the test set
 sk_predictions = sk_model.predict(X_test)
-
 # Evaluate
 print(f"Scikit-Learn Test Accuracy: {accuracy_score(sk_predictions, Y_test):.4f}")
 print("Custom Algorithm Accuracy: ", accuracy_score(Y_hat_test.round(), Y_test))
