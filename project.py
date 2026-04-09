@@ -52,14 +52,14 @@ Y_test = y_test.values
 # 3. CORE LOGISTIC LOGIC
 def initialize(dim):
     theta = np.random.rand(dim)
-    return theta
+    return theta #size(3,)
 
 def sigmoid(x):
     # Activation function used to map any real value between 0 and 1
     return 1 / (1 + np.exp(-x))
 
 def predict_Y(theta, X):
-    return sigmoid(np.dot(X, theta))
+    return sigmoid(np.dot(X, theta)) #size(20000,)
 
 def cost_function(theta, x, y):
     # Computes the cost function for all the training samples
@@ -70,7 +70,7 @@ def cost_function(theta, x, y):
     return total_cost
 
 def update_theta(x, y, y_hat, theta_o, learning_rate):
-    dw = (np.dot((y_hat - y), x) * 2) / len(y)
+    dw = (np.dot((y_hat - y), x) * 2) / len(y) #size of dw (6,)
     theta_1 = theta_o - learning_rate * dw
     return theta_1
 
