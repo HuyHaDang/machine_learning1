@@ -19,8 +19,8 @@ features = [
     "InGamePurchases"
 ]
 
-X_raw = df[features]
-y_raw = df["addicted"]
+X_raw = df[features] #datatype: pandas.DataFrame
+y_raw = df["addicted"] #datatype: pandas.DataFrame
 
 # Train/Test Split (80% Train, 20% Test)
 X_train_raw, X_test_raw, y_train, y_test = train_test_split(
@@ -35,16 +35,16 @@ train_mean = X_train_raw.mean()
 train_std = X_train_raw.std()
 
 # Normalize Train and Test using the TRAIN mean/std
-X_train = X_train_raw.apply(lambda rec: (rec - train_mean) / train_std, axis=1)
-X_test = X_test_raw.apply(lambda rec: (rec - train_mean) / train_std, axis=1)
+X_train = X_train_raw.apply(lambda rec: (rec - train_mean) / train_std, axis=1) #datatype: pandas.DataFrame
+X_test = X_test_raw.apply(lambda rec: (rec - train_mean) / train_std, axis=1) #datatype: pandas.DataFrame
 
 # Add x0 equal to 1 using np.c_
-X_train = np.c_[np.ones((X_train.shape[0], 1)), X_train]
-X_test = np.c_[np.ones((X_test.shape[0], 1)), X_test]
+X_train = np.c_[np.ones((X_train.shape[0], 1)), X_train] #numpy.ndarray
+X_test = np.c_[np.ones((X_test.shape[0], 1)), X_test] #numpy.ndarray
 
 # Convert y targets to NumPy arrays
-Y_train = y_train.values
-Y_test = y_test.values
+Y_train = y_train.values #numpy.ndarray
+Y_test = y_test.values #numpy.ndarray
 
 # 3. CORE LOGISTIC LOGIC
 def initialize(dim):
@@ -106,8 +106,8 @@ plt.show()
 Y_hat_test = predict_Y(theta, X_test)
 print("\n=== FINAL TEST RESULT ===")
 print("Test Accuracy:", accuracy_score(Y_hat_test.round(), Y_test))
-# print("Confusion Matrix:")
-# print(confusion_matrix(Y_test, Y_hat_test.round()))
+print("Confusion Matrix:")
+print(confusion_matrix(Y_test, Y_hat_test.round()))
 
 # =========================
 # 7. PREDICT NEW USER
@@ -132,16 +132,16 @@ print("Test Accuracy:", accuracy_score(Y_hat_test.round(), Y_test))
 
 
 
-from sklearn.linear_model import LogisticRegression
+# from sklearn.linear_model import LogisticRegression
 
-# 8. COMPARE WITH SCIKIT-LEARN
-print("\n=== SCIKIT-LEARN BENCHMARK ===")
+# # 8. COMPARE WITH SCIKIT-LEARN
+# print("\n=== SCIKIT-LEARN BENCHMARK ===")
 
-sk_model = LogisticRegression(C=np.inf, fit_intercept=False, max_iter=500)
+# sk_model = LogisticRegression(C=np.inf, fit_intercept=False, max_iter=500)
 
-sk_model.fit(X_train, Y_train)
-# Predict on the test set
-sk_predictions = sk_model.predict(X_test)
-# Evaluate
-print(f"Scikit-Learn Test Accuracy: {accuracy_score(sk_predictions, Y_test):.4f}")
-print("Custom Algorithm Accuracy: ", accuracy_score(Y_hat_test.round(), Y_test))
+# sk_model.fit(X_train, Y_train)
+# # Predict on the test set
+# sk_predictions = sk_model.predict(X_test)
+# # Evaluate
+# print(f"Scikit-Learn Test Accuracy: {accuracy_score(sk_predictions, Y_test):.4f}")
+# print("Custom Algorithm Accuracy: ", accuracy_score(Y_hat_test.round(), Y_test))
